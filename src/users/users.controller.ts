@@ -5,14 +5,14 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { AuthService } from './auth.service';
+import { UsersService } from './users.service';
 import { SignUpDto } from './dto/sign-up.dto';
 
 @ApiBearerAuth()
-@ApiTags('Auth')
-@Controller('auth')
-export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+@ApiTags('User')
+@Controller('user')
+export class UsersController {
+  constructor(private readonly authService: UsersService) {}
 
   @Post('/signup')
   @ApiOperation({ summary: 'Sign up' })

@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
-import { IsEnum, IsNotEmpty } from 'class-validator';
-import { Gender } from '../auth.model';
+import { IsEmail, IsEnum, IsNotEmpty } from 'class-validator';
+import { Gender } from '../users.model';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class SignUpDto {
@@ -18,6 +18,7 @@ export class SignUpDto {
 
   @ApiProperty({ example: 'tharinduoshan@gmail.com', description: 'email' })
   @IsNotEmpty()
+  @IsEmail()
   email: string;
 
   @ApiProperty({
