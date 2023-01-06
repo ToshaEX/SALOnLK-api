@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { Mongoose } from 'mongoose';
 import { UsersSchema } from './schemas/users.schema';
 

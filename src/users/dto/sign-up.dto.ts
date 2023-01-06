@@ -1,38 +1,37 @@
-/* eslint-disable prettier/prettier */
 import { IsEmail, IsEnum, IsNotEmpty } from 'class-validator';
 import { Gender } from '../users.model';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class SignUpDto {
-  @ApiProperty({ example: 'Oshan', description: 'string' })
   @IsNotEmpty()
+  @ApiProperty({ example: 'Oshan', description: 'string' })
   first_name: string;
 
-  @ApiProperty({ example: 'Tharindu', description: 'string' })
   @IsNotEmpty()
+  @ApiProperty({ example: 'Tharindu', description: 'string' })
   last_name: string;
 
-  @ApiProperty({ example: '0713206693', description: 'string' })
   @IsNotEmpty()
+  @ApiProperty({ example: '0713206693', description: 'string' })
   phone: string;
 
-  @ApiProperty({ example: 'tharinduoshan@gmail.com', description: 'email' })
   @IsNotEmpty()
   @IsEmail()
+  @ApiProperty({ example: 'tharinduoshan@gmail.com', description: 'email' })
   email: string;
 
+  @IsNotEmpty()
+  @IsEnum(Gender)
   @ApiProperty({
     example: 'Male',
     description: 'type:string, allowed values ["Male","Female","Other"]',
   })
-  @IsNotEmpty()
-  @IsEnum(Gender)
   gender: Gender;
 
+  @IsNotEmpty()
   @ApiProperty({
-    example: 'ukapan',
+    example: 'jhon@123',
     description: 'string',
   })
-  @IsNotEmpty()
   password: string;
 }
