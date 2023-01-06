@@ -1,5 +1,5 @@
 import { IsEmail, IsEnum, IsNotEmpty } from 'class-validator';
-import { Gender } from '../users.model';
+import { Gender } from '../enum/users.enum';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class SignUpDto {
