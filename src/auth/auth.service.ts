@@ -14,13 +14,14 @@ export class AuthService {
   ) {}
 
   async login(loginDto: LoginDto): Promise<{ accessToken: string }> {
-    console.log("hiii");
     const { email, password } = loginDto;
     const user: User = await this.usersService.findOne(email);
     if (user && (await bcrypt.compare(password, user.password))) {
       const payload: JwtPayload = {
+        id: user._id,
         email: user.email,
         first_name: user.first_name,
+        role: user.role,
       };
       return {
         accessToken: await this.jwtService.signAsync(payload),
