@@ -7,4 +7,5 @@ export const UsersSchema = new mongoose.Schema({
   email: String,
   gender: String,
   password: String,
+  // appointment: [{type:mongoose.Schema.Types.ObjectId,ref:""}]
 });

@@ -20,15 +20,20 @@ export class ServiceService {
     return await this.serviceModel.find();
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return `This action returns a #${id} service`;
   }
 
-  update(id: number, updateServiceDto: UpdateServiceDto) {
-    return `This action updates a #${id} service`;
+  async updateService(id: string, updateServiceDto: UpdateServiceDto) :Promise<Service>{
+    return await this.serviceModel.findOneAndUpdate({_id:id},updateServiceDto)
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} service`;
+  async getServiceById(id: string): Promise<Service> {
+    const find = await this.serviceModel.findById(id);
+    return find;
+  }
+
+  async deleteServiceById(id: string) {
+    return await this.serviceModel.findByIdAndDelete({_id:id})
   }
 }
