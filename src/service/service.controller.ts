@@ -23,7 +23,7 @@ import { Roles } from 'src/users/enum/role.enum';
 @Controller('service')
 export class ServiceController {
   constructor(private readonly serviceService: ServiceService) {}
-
+  
   @Post()
   @UseGuards(RolesGuard([Roles.BEAUTICIAN, Roles.ADMIN]))
   @ApiOperation({ summary: 'createService' })
@@ -32,7 +32,6 @@ export class ServiceController {
   }
 
   @Get()
-  @UseGuards(RolesGuard([Roles.BEAUTICIAN, Roles.USER, Roles.ADMIN]))
   @ApiOperation({ summary: 'getAllServices' })
   async findAll(@GetUser() user: User) {
     console.log(user);
@@ -40,7 +39,9 @@ export class ServiceController {
   }
 
   @Get(':id')
-  @UseGuards(RolesGuard([Roles.BEAUTICIAN, Roles.USER, Roles.ADMIN]))
+  @UseGuards(
+    RolesGuard([Roles.BEAUTICIAN, Roles.USER, Roles.ADMIN]),
+  )
   @ApiOperation({ summary: 'getServiceById' })
   getServiceById(@Param('id') id: string) {
     return this.serviceService.getServiceById(id);
