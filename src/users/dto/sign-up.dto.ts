@@ -1,3 +1,4 @@
+import { Roles } from './../enum/role.enum';
 import { IsEmail, IsEnum, IsNotEmpty } from 'class-validator';
 import { Gender } from '../enum/users.enum';
 import { ApiProperty } from '@nestjs/swagger';
@@ -34,4 +35,12 @@ export class SignUpDto {
     description: 'string',
   })
   password: string;
+
+  @IsNotEmpty()
+  @IsEnum(Roles)
+  @ApiProperty({
+    example: '',
+    description: 'enum',
+  })
+  role: Roles;
 }

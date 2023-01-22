@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UnauthorizedException } from '@nestjs/common';
+import { Body, Controller, Get, Post, UnauthorizedException } from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiOperation,
@@ -26,14 +26,16 @@ export class UsersController {
     if (find) {
       throw new UnauthorizedException('User already Registered.');
     }
-
+    
     return this.userService.signUp(signUpDto);
   }
+  
+  @Get()
+  @ApiOperation({ summary: 'Get All Users' })
+  @ApiResponse({ status: 403, description: 'Forbidden.' })
+  async getAllUsers(){
+    return await this.userService.getAllUsers();
+  }
 
-//   @Post("/login")
-//   @ApiOperation({ summary: 'Login' })
-//   @ApiResponse({ status: 403, description: 'Forbidden.' })
-//  async login(){
-//   return await this.authService.login()
-//  }
+
 }

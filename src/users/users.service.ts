@@ -3,6 +3,7 @@ import * as bcrypt from 'bcrypt';
 import { Model } from 'mongoose';
 import { SignUpDto } from './dto/sign-up.dto';
 import { User } from './interfaces/users.interface';
+import { Roles } from './enum/role.enum';
 
 
 @Injectable()
@@ -29,5 +30,9 @@ export class UsersService {
   async findOne(email: string): Promise<User> {
     const find = await this.userModel.findOne({ email });
     return find;
+  }
+
+  async getAllUsers(): Promise<User[]> {
+    return await this.userModel.find({role:[ Roles.ADMIN,Roles.BEAUTICIAN]}).exec();
   }
 }
