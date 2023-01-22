@@ -14,7 +14,7 @@ import {
 } from '@nestjs/swagger';
 import { UsersService } from './users.service';
 import { SignUpDto } from './dto/sign-up.dto';
-import { Param } from '@nestjs/common/decorators';
+import { Delete, Param } from '@nestjs/common/decorators';
 import { NotFoundException } from '@nestjs/common/exceptions';
 import { UpdateUserDto } from './dto/user-update.dto';
 
@@ -55,4 +55,14 @@ export class UsersController {
   async getAllUsers() {
     return await this.userService.getAllUsers();
   }
+  
+  @Delete("/:id")
+  @ApiOperation({ summary: 'Get All Users' })
+  @ApiResponse({ status: 403, description: 'Forbidden.' })
+  async deleteUser(@Param("id") id:string){
+    return await this.userService.deleteUser(id);
+  }
+
+  
+  
 }

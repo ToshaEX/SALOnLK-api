@@ -5,6 +5,7 @@ import { SignUpDto } from './dto/sign-up.dto';
 import { User } from './interfaces/users.interface';
 import { Roles } from './enum/role.enum';
 import { UpdateUserDto } from './dto/user-update.dto';
+import { DeleteResult } from 'mongodb';
 
 @Injectable()
 export class UsersService {
@@ -44,5 +45,8 @@ export class UsersService {
     return await this.userModel.findOneAndUpdate({ _id: id }, updateUserDto, {
       returnOriginal: false,
     });
+  }
+  async deleteUser(id: string): Promise<DeleteResult> {
+    return await this.userModel.deleteOne({ _id: id });
   }
 }
