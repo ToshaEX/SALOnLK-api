@@ -8,6 +8,7 @@ export const UsersSchema = new mongoose.Schema({
   email: String,
   gender: String,
   password: String,
-  role: { type: String, enum: Roles },
+  role: { type: String, enum: Roles ,default:Roles.USER},
+  create_at: {type:Date,default:Date.now},
   // appointment: [{type:mongoose.Schema.Types.ObjectId,ref:""}]
 });
