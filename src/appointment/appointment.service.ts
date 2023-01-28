@@ -4,7 +4,7 @@ import { UpdateAppointmentDto } from './dto/update-appointment.dto';
 
 @Injectable()
 export class AppointmentService {
-  create(createAppointmentDto: CreateAppointmentDto) {
+  createAppointment(createAppointmentDto: CreateAppointmentDto) {
     return 'This action adds a new appointment';
   }
 

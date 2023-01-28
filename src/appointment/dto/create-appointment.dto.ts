@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, } from '@nestjs/swagger';
 import { IsArray, IsNotEmpty } from 'class-validator';
 export class CreateAppointmentDto {
   @ApiProperty({ name: 'Appointment date', type: Date })
