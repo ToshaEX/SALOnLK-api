@@ -8,4 +8,5 @@ export const ServiceSchema = new mongoose.Schema({
   description: String,
   price: Number,
   time: Number,
+  appointment: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Appointment' }],
 });

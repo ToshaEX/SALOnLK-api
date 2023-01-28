@@ -13,8 +13,13 @@ export class AppointmentController {
   }
 
   @Get()
-  findAll() {
-    return this.appointmentService.findAll();
+  getAllAppointment() {
+    return this.appointmentService.getAllAppointment();
+  }
+
+  @Get("user/:id")
+  getAllUserAppointment(@Param("id") id: string) {
+    return this.appointmentService.getAllUserAppointment(id);
   }
 
   @Get(':id')
@@ -23,7 +28,10 @@ export class AppointmentController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAppointmentDto: UpdateAppointmentDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateAppointmentDto: UpdateAppointmentDto,
+  ) {
     return this.appointmentService.update(+id, updateAppointmentDto);
   }
 

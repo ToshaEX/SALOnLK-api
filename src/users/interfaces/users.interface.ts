@@ -1,5 +1,6 @@
+import { Appointment } from 'src/appointment/interfaces/appoinment.interface';
 import { Roles } from './../enum/role.enum';
-import { Document } from 'mongoose';
+import { Document,  Schema } from 'mongoose';
 export interface User extends Document {
   readonly first_name: string;
   readonly last_name: string;
@@ -8,4 +9,5 @@ export interface User extends Document {
   readonly email: string;
   readonly gender: string;
   readonly password: string;
+  appointment: [Appointment];
 }

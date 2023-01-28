@@ -10,5 +10,5 @@ export const UsersSchema = new mongoose.Schema({
   password: String,
   role: { type: String, enum: Roles ,default:Roles.USER},
   create_at: {type:Date,default:Date.now},
-  // appointment: [{type:mongoose.Schema.Types.ObjectId,ref:""}]
+  appointment: [{type:mongoose.Schema.Types.ObjectId,ref:"Appointment"}]
 });

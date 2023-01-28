@@ -1,8 +1,9 @@
-import { ApiProperty, } from '@nestjs/swagger';
-import { IsArray, IsNotEmpty } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsArray, IsDateString, IsNotEmpty } from 'class-validator';
 export class CreateAppointmentDto {
   @ApiProperty({ name: 'Appointment date', type: Date })
   @IsNotEmpty()
+  @IsDateString()
   appointment_date: Date;
 
   @ApiProperty({ name: 'Slots', type: Number, isArray: true })
@@ -12,11 +13,11 @@ export class CreateAppointmentDto {
 
   @ApiProperty({ name: 'Beautician ID', type: String })
   @IsNotEmpty()
-  beautician_id: string;
+  beautician: string;
 
   @ApiProperty({ name: 'User ID', type: String })
   @IsNotEmpty()
-  user_id: string;
+  user: string;
 
   @ApiProperty({ name: 'Service ID Array', type: String, isArray: true })
   @IsNotEmpty()
