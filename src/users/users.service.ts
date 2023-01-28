@@ -49,4 +49,8 @@ export class UsersService {
   async deleteUser(id: string): Promise<DeleteResult> {
     return await this.userModel.deleteOne({ _id: id });
   }
+  async getUserCount(role: Roles): Promise<number> {
+    const count = await this.userModel.find({ role: role });
+    return count.length;
+  }
 }

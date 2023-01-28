@@ -14,11 +14,12 @@ import {
 } from '@nestjs/swagger';
 import { UsersService } from './users.service';
 import { SignUpDto } from './dto/sign-up.dto';
-import { Delete, Param } from '@nestjs/common/decorators';
-import { NotFoundException } from '@nestjs/common/exceptions';
+import { Delete, Param, Query } from '@nestjs/common/decorators';
 import { UpdateUserDto } from './dto/user-update.dto';
+import { Roles } from './enum/role.enum';
 
-//  @ApiBearerAuth()
+
+  @ApiBearerAuth()
 @ApiTags('User')
 @Controller('user')
 export class UsersController {
@@ -42,10 +43,6 @@ export class UsersController {
   @ApiOperation({ summary: 'Get All Users' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
   async updateUserById(@Param('id') id: string,@Body() updateUserDto:UpdateUserDto) {
-    // const find = await this.userService.findOne(id);
-    // if (!find) {
-    //   throw new NotFoundException('No user found');
-    // }
     return await this.userService.updateUserById(id,updateUserDto );
   }
 
@@ -54,6 +51,12 @@ export class UsersController {
   @ApiResponse({ status: 403, description: 'Forbidden.' })
   async getAllUsers() {
     return await this.userService.getAllUsers();
+  }
+  @Get("/count?")
+  @ApiOperation({ summary: 'Get user count' })
+  @ApiResponse({ status: 403, description: 'Forbidden.' })
+  async userCount(@Query("role") role:Roles) {
+    return await this.userService.getUserCount(role);
   }
   
   @Delete("/:id")
