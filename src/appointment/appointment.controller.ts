@@ -1,7 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
+} from '@nestjs/common';
 import { AppointmentService } from './appointment.service';
 import { CreateAppointmentDto } from './dto/create-appointment.dto';
-import { UpdateAppointmentDto } from './dto/update-appointment.dto';
+import { UpdateStatusDto } from './dto/update-status.dto';
 
 @Controller('appointment')
 export class AppointmentController {
@@ -17,9 +26,34 @@ export class AppointmentController {
     return this.appointmentService.getAllAppointment();
   }
 
-  @Get("user/:id")
-  getAllUserAppointment(@Param("id") id: string) {
-    return this.appointmentService.getAllUserAppointment(id);
+  @Get('user/:id')
+  getAllUserAppointment(
+    @Param('id') id: string,
+    @Query('startDate') startDate: string,
+    @Query('endDate') endDate: string,
+  ) {
+    const convertedStartDate = new Date(startDate);
+    const convertedEndDate = new Date(endDate);
+    return this.appointmentService.getAllUserAppointment(id, convertedStartDate,convertedEndDate);
+  }
+
+  @Get('user/:id/slots')
+  getUserSlot(
+    @Param('id') id: string,
+    @Query('startDate') startDate: string,
+    @Query('endDate') endDate: string,
+  ) {
+    const convertedStartDate = new Date(startDate);
+    const convertedEndDate = new Date(endDate);
+    return this.appointmentService.getUserSlot(
+      id,
+      convertedStartDate,
+      convertedEndDate,
+    );
+  }
+  @Get('service/:id')
+  getAllServiceAppointment(@Param('id') id: string) {
+    return this.appointmentService.getAllServiceAppointment(id);
   }
 
   @Get(':id')
@@ -28,11 +62,11 @@ export class AppointmentController {
   }
 
   @Patch(':id')
-  update(
+  updateStatus(
     @Param('id') id: string,
-    @Body() updateAppointmentDto: UpdateAppointmentDto,
+    @Body() updateStatusDto: UpdateStatusDto,
   ) {
-    return this.appointmentService.update(+id, updateAppointmentDto);
+    return this.appointmentService.updateStatus(id, updateStatusDto);
   }
 
   @Delete(':id')

@@ -1,11 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CreateAppointmentDto } from './dto/create-appointment.dto';
-import { UpdateAppointmentDto } from './dto/update-appointment.dto';
-import { Model } from 'mongoose';
+import { UpdateStatusDto } from './dto/update-status.dto';
+import { Model, ObjectId } from 'mongoose';
 import { Appointment } from './interfaces/appoinment.interface';
 import { User } from 'src/users/interfaces/users.interface';
 import { Service } from 'src/service/interfaces/service.interface';
-
+import * as mongoose from 'mongoose';
 @Injectable()
 export class AppointmentService {
   constructor(
@@ -52,12 +52,47 @@ export class AppointmentService {
   async getAllAppointment(): Promise<Appointment[]> {
     const appointments = await this.appointmentModel
       .find()
+      .sort({ appointment_date: 1 })
       .populate(['user', 'services', 'beautician']);
     return appointments;
   }
 
-  async getAllUserAppointment(id: string): Promise<Appointment[]> {
-    const user = await this.userModel.findById(id).populate(['appointment']);
+  async getAllUserAppointment(
+    id: string,
+    startDate: Date,
+    endDate: Date,
+  ): Promise<Appointment[]> {
+    const user = await this.userModel
+      .findOne({ _id: id })
+      .populate('appointment')
+      .then(rec => {
+        return rec.appointment
+          .filter(
+            appointment =>
+              startDate < appointment.appointment_date &&
+              appointment.appointment_date < endDate,
+          )
+          .sort(
+            (a, b) =>
+              a.appointment_date.getTime() - b.appointment_date.getTime(),
+          );
+      });
+    console.log(user);
+    return user;
+  }
+  async getUserSlot(
+    id: string,
+    startDate: Date,
+    endDate: Date,
+  ): Promise<number[]> {
+    const user = await this.getAllUserAppointment(id, startDate, endDate);
+    const slots =[]
+    user.forEach(appointment => slots.push(...appointment.slots));
+    return slots.sort((a,b)=>a-b);
+  }
+
+  async getAllServiceAppointment(id: string): Promise<Appointment[]> {
+    const user = await this.serviceModel.findById(id).populate(['appointment']);
     return user.appointment;
   }
 
@@ -65,8 +100,15 @@ export class AppointmentService {
     return `This action returns a #${id} appointment`;
   }
 
-  update(id: number, updateAppointmentDto: UpdateAppointmentDto) {
-    return `This action updates a #${id} appointment`;
+  async updateStatus(
+    id: string,
+    updateStatusDto: UpdateStatusDto,
+  ): Promise<void> {
+    await this.appointmentModel.findOneAndUpdate(
+      { _id: id },
+      { is_approved: updateStatusDto.is_approved },
+    );
+    return;
   }
 
   remove(id: number) {
