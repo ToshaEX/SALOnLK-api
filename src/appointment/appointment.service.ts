@@ -96,9 +96,6 @@ export class AppointmentService {
     return user.appointment;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} appointment`;
-  }
 
   async updateStatus(
     id: string,
