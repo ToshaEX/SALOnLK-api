@@ -6,6 +6,7 @@ import { Appointment } from './interfaces/appoinment.interface';
 import { User } from 'src/users/interfaces/users.interface';
 import { Service } from 'src/service/interfaces/service.interface';
 import * as mongoose from 'mongoose';
+import { AppointmentSchema } from './schemas/appoinment.schema';
 @Injectable()
 export class AppointmentService {
   constructor(
@@ -81,21 +82,23 @@ export class AppointmentService {
     return user;
   }
 
-  async getAllUserAppointments(
-    id: string
-  ): Promise<Appointment[]> {
-    const user = await this.userModel
-      .findOne({ _id: id })
-      .populate('appointment')
-      .then(rec => {
-        return rec.appointment
-          .sort(
-            (a, b) =>
-              a.appointment_date.getTime() - b.appointment_date.getTime(),
-          );
-      });
+  async getAllUserAppointments(id: string): Promise<Appointment[]> {
+    const user = await this.userModel.findOne({ _id: id }).populate(
+      {
+        path: 'appointment',
+        populate: 'beautician services user',
+
+      }
+      
+    );
+
+    // .then(rec => {
+    //   return rec.appointment.sort(
+    //     (a, b) => a.appointment_date.getTime() - b.appointment_date.getTime(),
+    //   );
+    // });
     console.log(user);
-    return user;
+    return user.appointment;
   }
 
   async getUserSlot(
@@ -104,16 +107,15 @@ export class AppointmentService {
     endDate: Date,
   ): Promise<number[]> {
     const user = await this.getAllUserAppointment(id, startDate, endDate);
-    const slots =[]
+    const slots = [];
     user.forEach(appointment => slots.push(...appointment.slots));
-    return slots.sort((a,b)=>a-b);
+    return slots.sort((a, b) => a - b);
   }
 
   async getAllServiceAppointment(id: string): Promise<Appointment[]> {
     const user = await this.serviceModel.findById(id).populate(['appointment']);
     return user.appointment;
   }
-
 
   async updateStatus(
     id: string,
