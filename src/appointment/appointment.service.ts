@@ -80,6 +80,24 @@ export class AppointmentService {
     console.log(user);
     return user;
   }
+
+  async getAllUserAppointments(
+    id: string
+  ): Promise<Appointment[]> {
+    const user = await this.userModel
+      .findOne({ _id: id })
+      .populate('appointment')
+      .then(rec => {
+        return rec.appointment
+          .sort(
+            (a, b) =>
+              a.appointment_date.getTime() - b.appointment_date.getTime(),
+          );
+      });
+    console.log(user);
+    return user;
+  }
+
   async getUserSlot(
     id: string,
     startDate: Date,

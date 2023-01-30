@@ -41,6 +41,17 @@ export class AppointmentController {
       convertedEndDate,
     );
   }
+  @Get('user/all/:id')
+  @ApiOperation({ summary: 'getAllUserAppointments' })
+  @ApiResponse({ status: 403, description: 'Forbidden.' })
+  getAllUserAppointments(
+    @Param('id') id: string,
+  
+  ) {
+    return this.appointmentService.getAllUserAppointments(
+      id
+    );
+  }
 
   @Get('user/:id/slots')
   @ApiOperation({ summary: 'getUserSlot' })
