@@ -83,22 +83,20 @@ export class AppointmentService {
   }
 
   async getAllUserAppointments(id: string): Promise<Appointment[]> {
-    const user = await this.userModel.findOne({ _id: id }).populate(
-      {
+    const user = await this.userModel
+      .findOne({ _id: id })
+      .populate({
         path: 'appointment',
         populate: 'beautician services user',
+      })
 
-      }
-      
-    );
-
-    // .then(rec => {
-    //   return rec.appointment.sort(
-    //     (a, b) => a.appointment_date.getTime() - b.appointment_date.getTime(),
-    //   );
-    // });
+      .then(rec => {
+        return rec.appointment.sort(
+          (a, b) => b.appointment_date.getTime() - a.appointment_date.getTime(),
+        );
+      });
     console.log(user);
-    return user.appointment;
+    return user;
   }
 
   async getUserSlot(
