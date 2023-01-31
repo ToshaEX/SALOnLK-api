@@ -7,7 +7,7 @@ exports.databaseProviders = [
         provide: 'DATABASE_CONNECTION',
         useFactory: async () => await mongoose
             .set('strictQuery', true)
-            .connect('mongodb://localhost/salonlk'),
+            .connect('mongodb+srv://oshan:rhdotr@salonlk.dqcqdw1.mongodb.net/?retryWrites=true&w=majority'),
     },
 ];
 //# sourceMappingURL=database.providers.js.map

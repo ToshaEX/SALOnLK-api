@@ -6,6 +6,8 @@ export const databaseProviders = [
     useFactory: async (): Promise<typeof mongoose> =>
       await mongoose
         .set('strictQuery', true)
-        .connect('mongodb://localhost/salonlk'),
+        .connect(
+          'mongodb+srv://oshan:rhdotr@salonlk.dqcqdw1.mongodb.net/?retryWrites=true&w=majority',
+        ),
   },
 ];
