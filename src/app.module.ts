@@ -7,6 +7,13 @@ import { ServiceModule } from './service/service.module';
 import { AppointmentModule } from './appointment/appointment.module';
 
 @Module({
-  imports: [UsersModule, DatabaseModule, AuthModule, ServiceModule, AppointmentModule,],
+  imports: [
+    UsersModule,
+    DatabaseModule,
+    
+    AuthModule,
+    ServiceModule,
+    AppointmentModule,
+  ],
 })
 export class AppModule {}
